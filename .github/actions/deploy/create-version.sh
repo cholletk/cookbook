@@ -1,6 +1,6 @@
 #! /bin/bash
 
-set -x
+# set -x
 
 deploy_path='.github/actions/deploy'
 
