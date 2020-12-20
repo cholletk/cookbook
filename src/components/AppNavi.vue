@@ -17,10 +17,13 @@
                 @submit="downloadRecipe"
                 :disabled="downloading ? 'disabled' : null"
                 :icon="downloading ? 'icon-loading-small' : 'icon-download'">
-                    {{ t('cookbook', 'Recipe URL') }}
+                    {{ t('cookbook', 'Download recipe from URL') }}
             </ActionInput>
             <AppNavigationItem :title="t('cookbook', 'All recipes')" icon="icon-category-organization" :to="'/'">
                 <AppNavigationCounter slot="counter">{{ totalRecipeCount }}</AppNavigationCounter>
+            </AppNavigationItem>
+            <AppNavigationItem :title="t('cookbook', 'Uncategorized recipes')" icon="icon-category-organization" :to="'/category/_/'">
+                <AppNavigationCounter slot="counter">{{ uncatRecipes }}</AppNavigationCounter>
             </AppNavigationItem>
             <AppNavigationItem v-for="(cat,idx) in categories"
                 :key="cat+idx"
@@ -200,7 +203,7 @@ export default {
                 cat.recipes = json
             }).fail((jqXHR, textStatus, errorThrown) => {
                 cat.recipes = []
-                alert(t('cookbook', 'Failed to load category '+cat.name+' recipes'))
+                alert(t('cookbook', 'Failed to load category {category} recipes', {"category": cat.name}))
                 if (e && e instanceof Error) {
                     throw e
                 }
@@ -246,7 +249,7 @@ export default {
                         this.categories.push({
                             name: json[i].name,
                             recipeCount: parseInt(json[i].recipe_count),
-                            recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes...') }],
+                            recipes: [{ id: 0, name: t('cookbook', 'Loading category recipes …') }],
                         })
                     }
                 }
