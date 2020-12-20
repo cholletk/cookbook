@@ -87,7 +87,7 @@ jobs:
                 env:
                     TOKEN: abc
                 run: >-
-                    curl -X POST
+                    curl -X POST -v
                     https://apps.nextcloud.com/api/v1/apps/releases
                     -H "Authorization: Token $TOKEN"
                     -H "Content-Type: application/json"
